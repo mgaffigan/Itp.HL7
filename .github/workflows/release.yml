@@ -1,0 +1,26 @@
+name: Release tagged revision
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Build Itp.HL7Interpreter
+      run: dotnet pack Itp.HL7Interpreter -c Release -p:Version=${{github.ref_name}}
+    - name: NugetPush Itp.HL7Interpreter
+      run: dotnet nuget push -s https://www.nuget.org/api/v2/package --api-key ${{secrets.MG_NUGET_SECRET}} Itp.HL7Interpreter/bin/Release/Itp.HL7Interpreter.${{github.ref_name}}.nupkg
+    - name: Build Itp.HL7Interface
+      run: dotnet pack Itp.HL7Interface -c Release -p:Version=${{github.ref_name}}
+    - name: NugetPush Itp.HL7Interface
+      run: dotnet nuget push -s https://www.nuget.org/api/v2/package --api-key ${{secrets.MG_NUGET_SECRET}} Itp.HL7Interface/bin/Release/Itp.HL7Interface.${{github.ref_name}}.nupkg

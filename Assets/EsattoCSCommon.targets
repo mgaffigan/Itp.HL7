@@ -1,0 +1,30 @@
+<Project>
+  <PropertyGroup>
+    <Authors>mgaffigan</Authors>
+    <Company>In Touch Technologies</Company>
+    <Copyright>© 2022 In Touch Technologies.  All rights reserved.</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryUrl>https://github.com/mgaffigan/Itp.HL7</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mgaffigan/Itp.HL7</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <LangVersion>latest</LangVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)public.snk</AssemblyOriginatorKeyFile>
+    <ApplicationIcon>$(MSBuildThisFileDirectory)EsattoModule32.ico</ApplicationIcon>
+    <Version>4.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)public.snk" Visible="false">
+      <Link>public.snk</Link>
+    </None>
+    <Resource Include="$(MSBuildThisFileDirectory)EsattoModule32.ico" Visible="false">
+      <Link>EsattoModule32.ico</Link>
+    </Resource>
+  </ItemGroup>
+</Project>
