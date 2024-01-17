@@ -69,7 +69,7 @@ public class MllpListener : IDisposable
         }
         catch (Exception ex)
         {
-            Logger.LogWarning("Error while accepting socket", ex);
+            Logger.LogWarning(ex, "Error while accepting socket");
         }
     }
 
@@ -101,7 +101,7 @@ public class MllpListener : IDisposable
         }
         catch (ErrorAcknowledgementException ex)
         {
-            Logger.LogWarning("Error processing message", ex);
+            Logger.LogWarning(ex, "Error processing message");
             var ack = new AcknowledgementMessage("ITP", "HL7IF", AckControlNo,
                 AcknowledgementType.Error,
                 AcknowledgementErrorType.ApplicationInternalError, "Error Processing Message");
