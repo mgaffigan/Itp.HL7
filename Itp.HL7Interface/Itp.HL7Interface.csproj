@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;net7.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>true</ImplicitUsings>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>nullable</WarningsAsErrors>
@@ -8,6 +8,6 @@
   <Import Project="..\assets\EsattoCSCommon.targets" />
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
-    <ProjectReference Include="..\Itp.HL7Interpreter\Itp.HL7Interpreter.csproj" />
+    <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
 </Project>
