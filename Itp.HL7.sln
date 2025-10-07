@@ -22,6 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itp.Hl7.MllpConsoleServer",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{33CC26F8-4EF9-4712-9D96-CBB94ED8B8AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itp.SimpleHL7", "Itp.SimpleHl7\Itp.SimpleHL7.csproj", "{A33E23E2-E8AA-4BF4-9AD5-C2FF05413917}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itp.SimpleHL7.Tests", "Itp.SimpleHL7.Tests\Itp.SimpleHL7.Tests.csproj", "{7CFBD430-DD1A-4A66-9274-64DFA8F5B1ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{F635268F-1AC8-4AA9-98C1-2A639531449B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F635268F-1AC8-4AA9-98C1-2A639531449B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F635268F-1AC8-4AA9-98C1-2A639531449B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A33E23E2-E8AA-4BF4-9AD5-C2FF05413917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A33E23E2-E8AA-4BF4-9AD5-C2FF05413917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A33E23E2-E8AA-4BF4-9AD5-C2FF05413917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A33E23E2-E8AA-4BF4-9AD5-C2FF05413917}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CFBD430-DD1A-4A66-9274-64DFA8F5B1ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CFBD430-DD1A-4A66-9274-64DFA8F5B1ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CFBD430-DD1A-4A66-9274-64DFA8F5B1ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CFBD430-DD1A-4A66-9274-64DFA8F5B1ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
