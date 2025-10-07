@@ -12,15 +12,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-    - name: Build Itp.HL7Interpreter
-      run: dotnet pack Itp.HL7Interpreter -c Release -p:Version=${{github.ref_name}}
-    - name: NugetPush Itp.HL7Interpreter
-      run: dotnet nuget push -s https://www.nuget.org/api/v2/package --api-key ${{secrets.MG_NUGET_SECRET}} --skip-duplicate Itp.HL7Interpreter/bin/Release/Itp.HL7Interpreter.${{github.ref_name}}.nupkg
-    - name: Build Itp.HL7Interface
-      run: dotnet pack Itp.HL7Interface -c Release -p:Version=${{github.ref_name}}
-    - name: NugetPush Itp.HL7Interface
-      run: dotnet nuget push -s https://www.nuget.org/api/v2/package --api-key ${{secrets.MG_NUGET_SECRET}} --skip-duplicate Itp.HL7Interface/bin/Release/Itp.HL7Interface.${{github.ref_name}}.nupkg
+    - name: Test
+      run: dotnet test Itp.HL7.sln
+    - name: Build
+      run: dotnet pack Itp.HL7.sln -c Release -p PackageOutputPath=${{github.workspace}}/dist
+    - name: NugetPush
+      run: dotnet nuget push -s https://api.nuget.org/v3/index.json --api-key ${{secrets.MG_NUGET_SECRET}} --skip-duplicate "${{github.workspace}}/dist/**/*.nupkg"
