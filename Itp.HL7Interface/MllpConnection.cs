@@ -91,7 +91,7 @@ internal sealed class MllpConnection : IMllpConnection
 
             // copy the message to a new buffer
             // trim the SOM and EOMEB bytes
-            var message = buffer.Slice(0, endOfMessage).ToArray();
+            var message = buffer.Slice(0, iSeparator.Value).ToArray();
 
             // advance the reader
             Reader.AdvanceTo(endOfMessage);
