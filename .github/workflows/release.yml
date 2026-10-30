@@ -12,6 +12,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
     - name: Test
       run: dotnet test Itp.HL7.sln
     - name: Build
