@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Itp.SimpleHL7.Raw;
 
-public class HL7Segment
+public class HL7Segment : ICloneable
 {
     // Each field can be:
     // string                       1       A simple value
@@ -364,6 +364,15 @@ public class HL7Segment
             [11] = processingId,
             [12] = versionId
         };
+    }
+
+    object ICloneable.Clone() => Clone();
+
+    public HL7Segment Clone()
+    {
+        var seg = new HL7Segment(this.SegmentID);
+        seg._fields.AddRange(this._fields.Select(HL7FieldRepeatList.Clone));
+        return seg;
     }
 }
 

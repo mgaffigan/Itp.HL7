@@ -69,6 +69,17 @@ internal class HL7ComponentList : List<object?>
             HL7SubcomponentList.ToString(sb, separators, componentValue);
         }
     }
+
+    internal static object? Clone(object? source)
+    {
+        if (source is HL7ComponentList l)
+        {
+            var copy = new HL7ComponentList();
+            copy.AddRange(l.Select(HL7SubcomponentList.Clone));
+            return copy;
+        }
+        return HL7SubcomponentList.Clone(source);
+    }
 }
 
 // Opaque struct for setting a field.  Dual of RawHL7ComponentList

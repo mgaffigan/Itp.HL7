@@ -679,4 +679,66 @@ public class RawHL7SegmentTests
     }
 
     #endregion
+
+    #region Clone Tests
+
+    private const string CloneSource = "PID|simple|a~b|c1^c2~d1^d2|e1&e2^f~g1&g2";
+
+    [TestMethod]
+    public void Clone_ProducesEqualSegment()
+    {
+        var segment = HL7Segment.Parse(CloneSource);
+        var clone = segment.Clone();
+
+        Assert.AreNotSame(segment, clone);
+        Assert.AreEqual(segment.SegmentID, clone.SegmentID);
+        Assert.AreEqual(segment.FieldCount, clone.FieldCount);
+        Assert.AreEqual(CloneSource, clone.ToString());
+    }
+
+    [TestMethod]
+    public void Clone_ViaICloneable_ProducesEqualSegment()
+    {
+        var segment = HL7Segment.Parse(CloneSource);
+        var clone = (HL7Segment)((ICloneable)segment).Clone();
+
+        Assert.AreNotSame(segment, clone);
+        Assert.AreEqual(CloneSource, clone.ToString());
+    }
+
+    [TestMethod]
+    [DataRow(1, 1, 1, 1, DisplayName = "Simple field")]
+    [DataRow(2, 2, 1, 1, DisplayName = "Repeat")]
+    [DataRow(3, 2, 2, 1, DisplayName = "Component within repeat")]
+    [DataRow(4, 1, 1, 2, DisplayName = "Subcomponent")]
+    [DataRow(4, 2, 1, 2, DisplayName = "Subcomponent within repeat")]
+    [DataRow(4, 1, 2, 3, DisplayName = "Extend component to subcomponents")]
+    [DataRow(6, 1, 1, 1, DisplayName = "New field")]
+    public void Clone_ModifyingClone_DoesNotAffectOriginal(int field, int repeat, int component, int subcomponent)
+    {
+        var segment = HL7Segment.Parse(CloneSource);
+        var clone = segment.Clone();
+
+        clone[field, repeat, component, subcomponent] = "changed";
+
+        Assert.AreEqual("changed", clone[field, repeat, component, subcomponent]);
+        Assert.AreEqual(CloneSource, segment.ToString());
+    }
+
+    [TestMethod]
+    [DataRow(1, 1, 1, 1, DisplayName = "Simple field")]
+    [DataRow(2, 2, 1, 1, DisplayName = "Repeat")]
+    [DataRow(3, 2, 2, 1, DisplayName = "Component within repeat")]
+    [DataRow(4, 1, 1, 2, DisplayName = "Subcomponent")]
+    public void Clone_ModifyingOriginal_DoesNotAffectClone(int field, int repeat, int component, int subcomponent)
+    {
+        var segment = HL7Segment.Parse(CloneSource);
+        var clone = segment.Clone();
+
+        segment[field, repeat, component, subcomponent] = "changed";
+
+        Assert.AreEqual(CloneSource, clone.ToString());
+    }
+
+    #endregion
 }

@@ -60,6 +60,17 @@ internal class HL7FieldRepeatList : List<object?>
             HL7ComponentList.ToString(sb, separators, fieldValue);
         }
     }
+
+    internal static object? Clone(object? source)
+    {
+        if (source is HL7FieldRepeatList l)
+        {
+            var copy = new HL7FieldRepeatList();
+            copy.AddRange(l.Select(HL7ComponentList.Clone));
+            return copy;
+        }
+        return HL7ComponentList.Clone(source);
+    }
 }
 
 // Opaque struct for setting a field.  Dual of RawHL7FieldRepeatList

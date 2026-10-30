@@ -530,4 +530,68 @@ public class RawHL7MessageTests
     }
 
     #endregion
+
+    #region Clone Tests
+
+    private const string CloneSource =
+        "MSH|^~\\&|App|Facility|||20231001120000||ADT^A01|12345|P|2.5\r" +
+        "PID|1||123456789^^^MR~987&65^^^SS||Doe^John";
+
+    [TestMethod]
+    public void Clone_ProducesEqualMessage()
+    {
+        var message = HL7Message.Parse(CloneSource);
+        var clone = message.Clone();
+
+        Assert.AreNotSame(message, clone);
+        Assert.AreEqual(message.Count, clone.Count);
+        for (int i = 0; i < message.Count; i++)
+        {
+            Assert.AreNotSame(message[i], clone[i]);
+        }
+        Assert.AreEqual(message.ToString(), clone.ToString());
+    }
+
+    [TestMethod]
+    public void Clone_ViaICloneable_ProducesEqualMessage()
+    {
+        var message = HL7Message.Parse(CloneSource);
+        var clone = (HL7Message)((ICloneable)message).Clone();
+
+        Assert.AreNotSame(message, clone);
+        Assert.AreEqual(message.ToString(), clone.ToString());
+    }
+
+    [TestMethod]
+    public void Clone_ModifyingClone_DoesNotAffectOriginal()
+    {
+        var message = HL7Message.Parse(CloneSource);
+        var expected = message.ToString();
+        var clone = message.Clone();
+
+        clone.MSH[3] = "OtherApp";
+        clone["PID"][3, 2, 1, 2] = "changed";
+        clone["PID"][5, 1, 2] = "Jane";
+        clone.Add(new HL7Segment("PV1", "1"));
+
+        Assert.AreEqual("OtherApp", clone.MSH[3]);
+        Assert.AreEqual("changed", clone["PID"][3, 2, 1, 2]);
+        Assert.AreEqual(expected, message.ToString());
+        Assert.AreEqual(2, message.Count);
+    }
+
+    [TestMethod]
+    public void Clone_ModifyingOriginal_DoesNotAffectClone()
+    {
+        var message = HL7Message.Parse(CloneSource);
+        var clone = message.Clone();
+        var expected = clone.ToString();
+
+        message["PID"][3, 2, 1, 2] = "changed";
+        message.RemoveAt(1);
+
+        Assert.AreEqual(expected, clone.ToString());
+    }
+
+    #endregion
 }

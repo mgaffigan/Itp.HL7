@@ -61,6 +61,17 @@ internal class HL7SubcomponentList : List<object?>
             throw new InvalidOperationException($"Invalid subcomponent value type {subcomponentValue.GetType().FullName}");
         }
     }
+
+    internal static object? Clone(object? source)
+    {
+        if (source is HL7SubcomponentList l)
+        {
+            var copy = new HL7SubcomponentList();
+            copy.AddRange(l);
+            return copy;
+        }
+        return source;
+    }
 }
 
 // Opaque struct for setting a field.  Dual of RawHL7ComponentList

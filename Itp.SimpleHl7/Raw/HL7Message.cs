@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Itp.SimpleHL7.Raw;
 
-public class HL7Message : IList<HL7Segment>
+public class HL7Message : IList<HL7Segment>, ICloneable
 {
     private List<HL7Segment> _segments = new();
 
@@ -158,5 +158,17 @@ public class HL7Message : IList<HL7Segment>
         var msa = ack.Add("MSA", code, msh[9 /* control number */]);
         if (textMessage is not null) msa[3] = textMessage;
         return ack;
+    }
+
+    object ICloneable.Clone() => Clone();
+
+    public HL7Message Clone()
+    {
+        var clone = new HL7Message();
+        foreach (var seg in _segments)
+        {
+            clone.Add(seg.Clone());
+        }
+        return clone;
     }
 }
